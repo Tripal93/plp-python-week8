@@ -1,0 +1,120 @@
+PYTHON TOOLKIT PLAN
+====================
+
+1. Chosen Tools (3)
+- Number Guessing Game: Lets the user guess a secret number between 1 and 10 and gives hints until they get it right.
+- To-Do List Manager: Lets the user add tasks, view their current list, and clear completed items while the program runs.
+- Score & Grade Checker: Takes a numeric score and tells the user their letter grade and whether they passed or failed.
+
+2. Exact Menu Text
+=== MINI PYTHON TOOLKIT ===
+1. Number Guessing Game
+2. To-Do List Manager
+3. Score & Grade Checker
+4. Quit
+
+3. Concepts Used Per Tool
+- Number Guessing Game: while loop, conditional (if / elif / else), f-strings.
+- To-Do List Manager: list (appending/clearing items), conditional (if / else), f-strings.
+- Score & Grade Checker: conditional (if / elif / else), f-strings.import random
+
+
+# Tool 1: Lets the user guess a secret number from 1 to 10 with helpful hints.
+def number_guessing_game():
+    secret = random.randint(1, 10)
+    attempts = 0
+    print("\n--- Number Guessing Game ---")
+    print("I'm thinking of a number between 1 and 10.")
+
+    while True:
+        guess_text = input("Enter your guess: ").strip()
+        if not guess_text.isdigit():
+            print("Please enter a whole number between 1 and 10.")
+            continue
+
+        guess = int(guess_text)
+        attempts += 1
+
+        if guess < secret:
+            print("Too low! Try a higher number.")
+        elif guess > secret:
+            print("Too high! Try a lower number.")
+        else:
+            print(f"Nice job! You guessed {secret} in {attempts} tries.")
+            break
+
+
+# Tool 2: Manages a live list of tasks that can be viewed, added to, or cleared.
+def todo_list_manager(tasks):
+    print("\n--- To-Do List Manager ---")
+    if len(tasks) == 0:
+        print("Your to-do list is currently empty.")
+    else:
+        print("Your current tasks:")
+        for index, task in enumerate(tasks, start=1):
+            print(f"  {index}. {task}")
+
+    new_task = input("Type a new task to add (or press Enter to skip): ").strip()
+    if new_task:
+        tasks.append(new_task)
+        print(f"Added '{new_task}'! You now have {len(tasks)} task(s).")
+
+    clear_choice = input("Clear all tasks? (y/n): ").strip().lower()
+    if clear_choice == "y":
+        tasks.clear()
+        print("All tasks cleared.")
+    else:
+        print("Kept your existing tasks.")
+
+
+# Tool 3: Checks a score (0-100) and reports the grade and pass/fail status.
+def score_checker():
+    print("\n--- Score & Grade Checker ---")
+    raw_score = input("Enter a score (0 to 100): ").strip()
+
+    try:
+        score = float(raw_score)
+    except ValueError:
+        print(f"'{raw_score}' is not a valid number.")
+        return
+
+    if score < 0 or score > 100:
+        print("Please enter a score between 0 and 100.")
+    elif score >= 80:
+        print(f"Score {score}: Grade A — Passed with distinction!")
+    elif score >= 65:
+        print(f"Score {score}: Grade B — Passed!")
+    elif score >= 50:
+        print(f"Score {score}: Grade C — Passed!")
+    else:
+        print(f"Score {score}: Grade F — Failed (needs 50 or above to pass).")
+
+
+def main():
+    tasks = []
+    print("Welcome to the Python Toolkit! Let's get some work done.")
+
+    while True:
+        print("\n=== MINI PYTHON TOOLKIT ===")
+        print("1. Number Guessing Game")
+        print("2. To-Do List Manager")
+        print("3. Score & Grade Checker")
+        print("4. Quit")
+
+        choice = input("Choose an option (1-4): ").strip()
+
+        if choice == "1":
+            number_guessing_game()
+        elif choice == "2":
+            todo_list_manager(tasks)
+        elif choice == "3":
+            score_checker()
+        elif choice == "4":
+            print("\nThanks for using the Python Toolkit. Goodbye and happy coding!")
+            break
+        else:
+            print(f"'{choice}' is not a valid menu option. Please pick 1, 2, 3, or 4.")
+
+
+if __name__ == "__main__":
+    main()
